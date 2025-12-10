@@ -1,13 +1,14 @@
 import { NavLink } from '@/components/NavLink';
-import { GraduationCap, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import unjLogo from '@/assets/unj-logo.png';
 
 const navItems = [
-  { to: '/', label: 'Home' },
-  { to: '/requirements', label: 'Requirements' },
-  { to: '/systems', label: 'Systems' },
-  { to: '/results', label: 'Results' },
+  { to: '/', label: 'Beranda' },
+  { to: '/requirements', label: 'Persyaratan' },
+  { to: '/systems', label: 'Sistem' },
+  { to: '/results', label: 'Hasil' },
 ];
 
 export function Navbar() {
@@ -17,10 +18,8 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <NavLink to="/" className="flex items-center gap-2 font-bold text-xl">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <GraduationCap className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="hidden sm:inline">ScholarSelect</span>
+          <img src={unjLogo} alt="Logo UNJ" className="h-10 w-10 object-contain" />
+          <span className="hidden sm:inline text-base lg:text-lg">SPK Beasiswa Djarum Plus</span>
         </NavLink>
 
         {/* Desktop Navigation */}

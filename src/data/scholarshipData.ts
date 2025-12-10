@@ -1,4 +1,4 @@
-// Criteria definitions with weights and rubrics
+// Definisi kriteria dengan bobot dan rubrik
 export interface Criterion {
   id: string;
   name: string;
@@ -13,72 +13,72 @@ export interface Criterion {
 export const criteria: Criterion[] = [
   {
     id: 'C1',
-    name: 'Academic Performance (GPA)',
+    name: 'IPK (Indeks Prestasi Kumulatif)',
     weight: 0.30,
     type: 'benefit',
     rubric: [
-      { score: 1, description: 'GPA < 2.0' },
-      { score: 2, description: 'GPA 2.0 - 2.49' },
-      { score: 3, description: 'GPA 2.5 - 2.99' },
-      { score: 4, description: 'GPA 3.0 - 3.49' },
-      { score: 5, description: 'GPA ≥ 3.5' },
+      { score: 5, description: 'IPK 3.8 - 4.0' },
+      { score: 4, description: 'IPK 3.5 - 3.79' },
+      { score: 3, description: 'IPK 3.0 - 3.49' },
+      { score: 2, description: 'IPK 2.5 - 2.99' },
+      { score: 1, description: 'IPK < 2.49' },
     ],
   },
   {
     id: 'C2',
-    name: 'Family Income',
-    weight: 0.25,
-    type: 'cost',
+    name: 'Keaktifan Organisasi',
+    weight: 0.20,
+    type: 'benefit',
     rubric: [
-      { score: 1, description: '> $100,000/year' },
-      { score: 2, description: '$75,000 - $100,000/year' },
-      { score: 3, description: '$50,000 - $74,999/year' },
-      { score: 4, description: '$25,000 - $49,999/year' },
-      { score: 5, description: '< $25,000/year' },
+      { score: 5, description: 'Sangat Tinggi - Pimpinan Tingkat Universitas/Nasional' },
+      { score: 4, description: 'Tinggi - Pimpinan Tingkat Fakultas/Prodi' },
+      { score: 3, description: 'Cukup - Staf Inti Tingkat Universitas/Fakultas' },
+      { score: 2, description: 'Rendah - Staf Inti (Tingkat Prodi) atau Anggota dan Panitia Aktif' },
+      { score: 1, description: 'Sangat Rendah - Anggota Pasif atau Tidak Aktif' },
     ],
   },
   {
     id: 'C3',
-    name: 'Extracurricular Activities',
-    weight: 0.15,
+    name: 'Prestasi',
+    weight: 0.20,
     type: 'benefit',
     rubric: [
-      { score: 1, description: 'No participation' },
-      { score: 2, description: '1-2 activities' },
-      { score: 3, description: '3-4 activities' },
-      { score: 4, description: '5-6 activities with leadership' },
-      { score: 5, description: '7+ activities with significant leadership' },
+      { score: 5, description: 'Sangat Tinggi - > 5 Prestasi' },
+      { score: 4, description: 'Tinggi - 4 s.d. 5 Prestasi' },
+      { score: 3, description: 'Cukup - 2 s.d. 3 Prestasi' },
+      { score: 2, description: 'Rendah - 1 Prestasi' },
+      { score: 1, description: 'Sangat Rendah - 0 Prestasi' },
     ],
   },
   {
     id: 'C4',
-    name: 'Community Service Hours',
+    name: 'Hasil Tes Tulis',
     weight: 0.15,
     type: 'benefit',
     rubric: [
-      { score: 1, description: '0-10 hours' },
-      { score: 2, description: '11-25 hours' },
-      { score: 3, description: '26-50 hours' },
-      { score: 4, description: '51-100 hours' },
-      { score: 5, description: '> 100 hours' },
+      { score: 5, description: 'Sangat Tinggi - Nilai 85 - 100' },
+      { score: 4, description: 'Tinggi - Nilai 70 - 84' },
+      { score: 3, description: 'Cukup - Nilai 55 - 69' },
+      { score: 2, description: 'Rendah - Nilai 45 - 54' },
+      { score: 1, description: 'Sangat Rendah - Nilai ≤ 44' },
     ],
   },
   {
     id: 'C5',
-    name: 'Distance from Campus',
+    name: 'Hasil Tes Wawancara',
     weight: 0.15,
-    type: 'cost',
+    type: 'benefit',
     rubric: [
-      { score: 1, description: '< 5 km' },
-      { score: 2, description: '5-15 km' },
-      { score: 3, description: '16-30 km' },
-      { score: 4, description: '31-50 km' },
-      { score: 5, description: '> 50 km' },
+      { score: 5, description: 'Sangat Tinggi - Nilai 85 - 100' },
+      { score: 4, description: 'Tinggi - Nilai 70 - 84' },
+      { score: 3, description: 'Cukup - Nilai 55 - 69' },
+      { score: 2, description: 'Rendah - Nilai 45 - 54' },
+      { score: 1, description: 'Sangat Rendah - Nilai ≤ 44' },
     ],
   },
 ];
 
-// Dummy student data
+// Data mahasiswa dummy
 export interface Student {
   id: string;
   name: string;
@@ -86,19 +86,19 @@ export interface Student {
 }
 
 export const students: Student[] = [
-  { id: 'S001', name: 'Alice Johnson', scores: { C1: 5, C2: 4, C3: 4, C4: 5, C5: 3 } },
-  { id: 'S002', name: 'Bob Smith', scores: { C1: 4, C2: 5, C3: 3, C4: 4, C5: 4 } },
-  { id: 'S003', name: 'Carol Williams', scores: { C1: 3, C2: 3, C3: 5, C4: 3, C5: 2 } },
-  { id: 'S004', name: 'David Brown', scores: { C1: 5, C2: 2, C3: 4, C4: 4, C5: 5 } },
-  { id: 'S005', name: 'Eva Martinez', scores: { C1: 4, C2: 4, C3: 3, C4: 5, C5: 3 } },
-  { id: 'S006', name: 'Frank Lee', scores: { C1: 3, C2: 5, C3: 2, C4: 3, C5: 4 } },
-  { id: 'S007', name: 'Grace Kim', scores: { C1: 5, C2: 3, C3: 5, C4: 4, C5: 2 } },
-  { id: 'S008', name: 'Henry Chen', scores: { C1: 4, C2: 4, C3: 4, C4: 3, C5: 3 } },
-  { id: 'S009', name: 'Iris Patel', scores: { C1: 2, C2: 5, C3: 3, C4: 4, C5: 5 } },
-  { id: 'S010', name: 'Jack Wilson', scores: { C1: 5, C2: 3, C3: 4, C4: 5, C5: 4 } },
+  { id: 'M001', name: 'Ahmad Fauzan', scores: { C1: 5, C2: 4, C3: 4, C4: 5, C5: 4 } },
+  { id: 'M002', name: 'Siti Nurhaliza', scores: { C1: 4, C2: 5, C3: 3, C4: 4, C5: 5 } },
+  { id: 'M003', name: 'Budi Santoso', scores: { C1: 3, C2: 3, C3: 5, C4: 3, C5: 3 } },
+  { id: 'M004', name: 'Dewi Lestari', scores: { C1: 5, C2: 3, C3: 4, C4: 4, C5: 5 } },
+  { id: 'M005', name: 'Rizky Pratama', scores: { C1: 4, C2: 4, C3: 3, C4: 5, C5: 4 } },
+  { id: 'M006', name: 'Putri Ayu', scores: { C1: 3, C2: 5, C3: 2, C4: 3, C5: 4 } },
+  { id: 'M007', name: 'Muhammad Ridwan', scores: { C1: 5, C2: 4, C3: 5, C4: 4, C5: 3 } },
+  { id: 'M008', name: 'Nurul Hidayah', scores: { C1: 4, C2: 4, C3: 4, C4: 3, C5: 4 } },
+  { id: 'M009', name: 'Andi Wijaya', scores: { C1: 2, C2: 5, C3: 3, C4: 4, C5: 5 } },
+  { id: 'M010', name: 'Fitri Handayani', scores: { C1: 5, C2: 3, C3: 4, C4: 5, C5: 4 } },
 ];
 
-// SAW Calculation Functions
+// Fungsi Perhitungan SAW
 export function normalizeMatrix(students: Student[], criteria: Criterion[]): Record<string, Record<string, number>> {
   const normalized: Record<string, Record<string, number>> = {};
   
@@ -111,10 +111,10 @@ export function normalizeMatrix(students: Student[], criteria: Criterion[]): Rec
       if (!normalized[student.id]) normalized[student.id] = {};
       
       if (criterion.type === 'benefit') {
-        // Benefit: higher is better, normalize by max
+        // Benefit: semakin tinggi semakin baik, normalisasi dengan max
         normalized[student.id][criterion.id] = student.scores[criterion.id] / max;
       } else {
-        // Cost: lower is better, normalize by min/value
+        // Cost: semakin rendah semakin baik, normalisasi dengan min/value
         normalized[student.id][criterion.id] = min / student.scores[criterion.id];
       }
     });
@@ -154,6 +154,6 @@ export function getRankedStudents(students: Student[], criteria: Criterion[]) {
     .map((student, index) => ({
       ...student,
       rank: index + 1,
-      passed: student.sawScore >= 0.7, // Threshold for passing
+      passed: student.sawScore >= 0.7, // Threshold untuk lolos
     }));
 }

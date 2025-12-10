@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { criteria, students } from '@/data/scholarshipData';
-import { TrendingUp, TrendingDown, Users, Target, Scale } from 'lucide-react';
+import { TrendingUp, Users, Target, Scale } from 'lucide-react';
 
 export default function Requirements() {
   const totalWeight = criteria.reduce((sum, c) => sum + c.weight, 0);
@@ -13,10 +13,10 @@ export default function Requirements() {
       <div className="container py-12">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">Scholarship Requirements</h1>
+          <h1 className="text-4xl font-bold mb-4">Persyaratan Beasiswa</h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            The scholarship selection is based on 5 weighted criteria. Each criterion has a rubric 
-            with scores from 1 to 5, and is classified as either a benefit or cost factor.
+            Seleksi beasiswa didasarkan pada 5 kriteria berbobot. Setiap kriteria memiliki rubrik 
+            dengan skor dari 1 hingga 5, dan semua kriteria diklasifikasikan sebagai faktor benefit.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export default function Requirements() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{criteria.length}</p>
-                  <p className="text-sm text-muted-foreground">Evaluation Criteria</p>
+                  <p className="text-sm text-muted-foreground">Kriteria Evaluasi</p>
                 </div>
               </div>
             </CardContent>
@@ -43,7 +43,7 @@ export default function Requirements() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{(totalWeight * 100).toFixed(0)}%</p>
-                  <p className="text-sm text-muted-foreground">Total Weight</p>
+                  <p className="text-sm text-muted-foreground">Total Bobot</p>
                 </div>
               </div>
             </CardContent>
@@ -56,7 +56,7 @@ export default function Requirements() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{students.length}</p>
-                  <p className="text-sm text-muted-foreground">Candidates</p>
+                  <p className="text-sm text-muted-foreground">Kandidat</p>
                 </div>
               </div>
             </CardContent>
@@ -65,7 +65,7 @@ export default function Requirements() {
 
         {/* Criteria Cards */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Evaluation Criteria & Rubrics</h2>
+          <h2 className="text-2xl font-bold mb-6">Kriteria Evaluasi & Rubrik</h2>
           <div className="grid gap-6">
             {criteria.map((criterion, index) => (
               <Card key={criterion.id} className="glass-card animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
@@ -78,20 +78,16 @@ export default function Requirements() {
                       <div>
                         <CardTitle className="text-lg">{criterion.name}</CardTitle>
                         <CardDescription className="flex items-center gap-2 mt-1">
-                          Weight: <span className="font-semibold text-foreground">{(criterion.weight * 100).toFixed(0)}%</span>
+                          Bobot: <span className="font-semibold text-foreground">{(criterion.weight * 100).toFixed(0)}%</span>
                         </CardDescription>
                       </div>
                     </div>
                     <Badge 
-                      variant={criterion.type === 'benefit' ? 'default' : 'secondary'}
-                      className={criterion.type === 'benefit' ? 'bg-success hover:bg-success/90' : 'bg-warning hover:bg-warning/90 text-warning-foreground'}
+                      variant="default"
+                      className="bg-success hover:bg-success/90"
                     >
-                      {criterion.type === 'benefit' ? (
-                        <TrendingUp className="h-3 w-3 mr-1" />
-                      ) : (
-                        <TrendingDown className="h-3 w-3 mr-1" />
-                      )}
-                      {criterion.type === 'benefit' ? 'Benefit' : 'Cost'}
+                      <TrendingUp className="h-3 w-3 mr-1" />
+                      Benefit
                     </Badge>
                   </div>
                 </CardHeader>
@@ -99,8 +95,8 @@ export default function Requirements() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-20">Score</TableHead>
-                        <TableHead>Description</TableHead>
+                        <TableHead className="w-20">Skor</TableHead>
+                        <TableHead>Deskripsi</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -124,15 +120,15 @@ export default function Requirements() {
 
         {/* Input Data Preview */}
         <div>
-          <h2 className="text-2xl font-bold mb-6">Student Input Data (Sample)</h2>
+          <h2 className="text-2xl font-bold mb-6">Data Input Mahasiswa (Contoh)</h2>
           <Card className="glass-card overflow-hidden">
             <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/50">
-                      <TableHead className="font-semibold">Student ID</TableHead>
-                      <TableHead className="font-semibold">Name</TableHead>
+                      <TableHead className="font-semibold">NIM</TableHead>
+                      <TableHead className="font-semibold">Nama</TableHead>
                       {criteria.map((c) => (
                         <TableHead key={c.id} className="font-semibold text-center">
                           {c.id}

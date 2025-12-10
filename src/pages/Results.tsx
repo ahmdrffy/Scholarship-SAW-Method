@@ -27,9 +27,9 @@ export default function Results() {
       <div className="container py-12">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">Scholarship Results</h1>
+          <h1 className="text-4xl font-bold mb-4">Hasil Seleksi Beasiswa</h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Summary statistics and final rankings of all candidates based on SAW calculation.
+            Statistik ringkasan dan peringkat akhir semua kandidat berdasarkan perhitungan SAW.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export default function Results() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{students.length}</p>
-                  <p className="text-sm text-muted-foreground">Total Candidates</p>
+                  <p className="text-sm text-muted-foreground">Total Kandidat</p>
                 </div>
               </div>
             </CardContent>
@@ -56,7 +56,7 @@ export default function Results() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{passedStudents.length}</p>
-                  <p className="text-sm text-muted-foreground">Passed (≥0.70)</p>
+                  <p className="text-sm text-muted-foreground">Lolos (≥0.70)</p>
                 </div>
               </div>
             </CardContent>
@@ -69,7 +69,7 @@ export default function Results() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{failedStudents.length}</p>
-                  <p className="text-sm text-muted-foreground">Not Passed</p>
+                  <p className="text-sm text-muted-foreground">Tidak Lolos</p>
                 </div>
               </div>
             </CardContent>
@@ -82,7 +82,7 @@ export default function Results() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{(passedStudents.length / students.length * 100).toFixed(0)}%</p>
-                  <p className="text-sm text-muted-foreground">Pass Rate</p>
+                  <p className="text-sm text-muted-foreground">Tingkat Kelulusan</p>
                 </div>
               </div>
             </CardContent>
@@ -95,9 +95,9 @@ export default function Results() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BarChart3 className="h-5 w-5" />
-                Score Distribution
+                Distribusi Skor
               </CardTitle>
-              <CardDescription>SAW scores for all candidates (threshold: 0.70)</CardDescription>
+              <CardDescription>Skor SAW untuk semua kandidat (threshold: 0.70)</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-[300px]">
@@ -129,26 +129,26 @@ export default function Results() {
 
           <Card className="glass-card">
             <CardHeader>
-              <CardTitle>Score Statistics</CardTitle>
+              <CardTitle>Statistik Skor</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">Highest Score</span>
+                  <span className="text-sm text-muted-foreground">Skor Tertinggi</span>
                   <span className="font-bold text-success">{highestScore.toFixed(4)}</span>
                 </div>
                 <Progress value={highestScore * 100} className="h-2" />
               </div>
               <div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">Average Score</span>
+                  <span className="text-sm text-muted-foreground">Skor Rata-rata</span>
                   <span className="font-bold">{averageScore.toFixed(4)}</span>
                 </div>
                 <Progress value={averageScore * 100} className="h-2" />
               </div>
               <div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">Lowest Score</span>
+                  <span className="text-sm text-muted-foreground">Skor Terendah</span>
                   <span className="font-bold text-destructive">{lowestScore.toFixed(4)}</span>
                 </div>
                 <Progress value={lowestScore * 100} className="h-2" />
@@ -168,7 +168,7 @@ export default function Results() {
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
             <Trophy className="h-6 w-6 text-secondary" />
-            Top Scholarship Recipients
+            Penerima Beasiswa Teratas
           </h2>
           <div className="grid md:grid-cols-3 gap-4">
             {rankedStudents.slice(0, 3).map((student, index) => (
@@ -186,20 +186,20 @@ export default function Results() {
                     #{student.rank}
                   </div>
                   <CardTitle>{student.name}</CardTitle>
-                  <CardDescription>ID: {student.id}</CardDescription>
+                  <CardDescription>NIM: {student.id}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div>
                       <div className="flex justify-between mb-1">
-                        <span className="text-sm text-muted-foreground">SAW Score</span>
+                        <span className="text-sm text-muted-foreground">Skor SAW</span>
                         <span className="font-bold">{student.sawScore.toFixed(4)}</span>
                       </div>
                       <Progress value={student.sawScore * 100} className="h-2" />
                     </div>
                     <Badge className="bg-success hover:bg-success/90">
                       <CheckCircle className="h-3 w-3 mr-1" />
-                      Scholarship Awarded
+                      Beasiswa Diberikan
                     </Badge>
                   </div>
                 </CardContent>
@@ -211,21 +211,21 @@ export default function Results() {
         {/* Full Rankings Table */}
         <Card className="glass-card overflow-hidden">
           <CardHeader>
-            <CardTitle>Complete Ranking</CardTitle>
-            <CardDescription>All candidates sorted by SAW score</CardDescription>
+            <CardTitle>Peringkat Lengkap</CardTitle>
+            <CardDescription>Semua kandidat diurutkan berdasarkan skor SAW</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/50">
-                    <TableHead className="font-semibold text-center w-20">Rank</TableHead>
-                    <TableHead className="font-semibold">Student ID</TableHead>
-                    <TableHead className="font-semibold">Name</TableHead>
+                    <TableHead className="font-semibold text-center w-20">Peringkat</TableHead>
+                    <TableHead className="font-semibold">NIM</TableHead>
+                    <TableHead className="font-semibold">Nama</TableHead>
                     {criteria.map((c) => (
                       <TableHead key={c.id} className="font-semibold text-center">{c.id}</TableHead>
                     ))}
-                    <TableHead className="font-semibold text-center">SAW Score</TableHead>
+                    <TableHead className="font-semibold text-center">Skor SAW</TableHead>
                     <TableHead className="font-semibold text-center">Status</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -257,12 +257,12 @@ export default function Results() {
                           {student.passed ? (
                             <>
                               <CheckCircle className="h-3 w-3 mr-1" />
-                              Passed
+                              Lolos
                             </>
                           ) : (
                             <>
                               <XCircle className="h-3 w-3 mr-1" />
-                              Not Passed
+                              Tidak Lolos
                             </>
                           )}
                         </Badge>
