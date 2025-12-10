@@ -15,10 +15,10 @@ export default function Systems() {
       <div className="container py-12">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">SAW Calculation System</h1>
+          <h1 className="text-4xl font-bold mb-4">Sistem Perhitungan SAW</h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Step-by-step demonstration of the Simple Additive Weighting method, 
-            from raw scores to final rankings.
+            Demonstrasi langkah demi langkah metode Simple Additive Weighting, 
+            dari skor mentah hingga peringkat akhir.
           </p>
         </div>
 
@@ -29,8 +29,8 @@ export default function Systems() {
               1
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Original Decision Matrix</h2>
-              <p className="text-muted-foreground">Raw scores from student evaluations</p>
+              <h2 className="text-2xl font-bold">Matriks Keputusan Awal</h2>
+              <p className="text-muted-foreground">Skor mentah dari evaluasi mahasiswa</p>
             </div>
           </div>
           <Card className="glass-card overflow-hidden">
@@ -39,7 +39,7 @@ export default function Systems() {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/50">
-                      <TableHead className="font-semibold">Student</TableHead>
+                      <TableHead className="font-semibold">Mahasiswa</TableHead>
                       {criteria.map((c) => (
                         <TableHead key={c.id} className="font-semibold text-center">
                           <div className="flex flex-col items-center gap-1">
@@ -84,33 +84,23 @@ export default function Systems() {
               2
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Normalized Matrix</h2>
-              <p className="text-muted-foreground">Values normalized using benefit/cost formulas</p>
+              <h2 className="text-2xl font-bold">Matriks Ternormalisasi</h2>
+              <p className="text-muted-foreground">Nilai dinormalisasi menggunakan formula benefit</p>
             </div>
           </div>
           
           {/* Normalization Formulas */}
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div className="mb-6">
             <Card className="bg-success/5 border-success/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Grid3X3 className="h-4 w-4 text-success" />
-                  Benefit Normalization
+                  Normalisasi Benefit
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <code className="text-sm">r<sub>ij</sub> = X<sub>ij</sub> / max(X<sub>j</sub>)</code>
-              </CardContent>
-            </Card>
-            <Card className="bg-warning/5 border-warning/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base flex items-center gap-2">
-                  <Grid3X3 className="h-4 w-4 text-warning" />
-                  Cost Normalization
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <code className="text-sm">r<sub>ij</sub> = min(X<sub>j</sub>) / X<sub>ij</sub></code>
+                <p className="text-xs text-muted-foreground mt-1">Semakin tinggi nilai, semakin baik</p>
               </CardContent>
             </Card>
           </div>
@@ -121,16 +111,16 @@ export default function Systems() {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/50">
-                      <TableHead className="font-semibold">Student</TableHead>
+                      <TableHead className="font-semibold">Mahasiswa</TableHead>
                       {criteria.map((c) => (
                         <TableHead key={c.id} className="font-semibold text-center">
                           <div className="flex flex-col items-center gap-1">
                             <span>{c.id}</span>
                             <Badge 
-                              className={c.type === 'benefit' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning'}
+                              className="bg-success/20 text-success"
                               variant="outline"
                             >
-                              {c.type}
+                              benefit
                             </Badge>
                           </div>
                         </TableHead>
@@ -169,8 +159,8 @@ export default function Systems() {
               3
             </div>
             <div>
-              <h2 className="text-2xl font-bold">SAW Score & Final Ranking</h2>
-              <p className="text-muted-foreground">V<sub>i</sub> = Σ (W<sub>j</sub> × r<sub>ij</sub>) with threshold ≥ 0.70 to pass</p>
+              <h2 className="text-2xl font-bold">Skor SAW & Peringkat Akhir</h2>
+              <p className="text-muted-foreground">V<sub>i</sub> = Σ (W<sub>j</sub> × r<sub>ij</sub>) dengan threshold ≥ 0.70 untuk lolos</p>
             </div>
           </div>
 
@@ -179,7 +169,7 @@ export default function Systems() {
             <CardHeader className="pb-2">
               <CardTitle className="text-base flex items-center gap-2">
                 <Calculator className="h-4 w-4" />
-                Criteria Weights
+                Bobot Kriteria
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -200,14 +190,14 @@ export default function Systems() {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/50">
-                      <TableHead className="font-semibold text-center w-20">Rank</TableHead>
-                      <TableHead className="font-semibold">Student</TableHead>
+                      <TableHead className="font-semibold text-center w-20">Peringkat</TableHead>
+                      <TableHead className="font-semibold">Mahasiswa</TableHead>
                       {criteria.map((c) => (
                         <TableHead key={c.id} className="font-semibold text-center">
                           W×r ({c.id})
                         </TableHead>
                       ))}
-                      <TableHead className="font-semibold text-center">SAW Score</TableHead>
+                      <TableHead className="font-semibold text-center">Skor SAW</TableHead>
                       <TableHead className="font-semibold text-center">Status</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -236,9 +226,9 @@ export default function Systems() {
                             {student.passed ? (
                               <>
                                 <Trophy className="h-3 w-3 mr-1" />
-                                Passed
+                                Lolos
                               </>
-                            ) : 'Not Passed'}
+                            ) : 'Tidak Lolos'}
                           </Badge>
                         </TableCell>
                       </TableRow>
@@ -255,10 +245,10 @@ export default function Systems() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calculator className="h-5 w-5" />
-              Calculation Example: {rankedStudents[0]?.name}
+              Contoh Perhitungan: {rankedStudents[0]?.name}
             </CardTitle>
             <CardDescription>
-              Step-by-step calculation for the top-ranked student
+              Perhitungan langkah demi langkah untuk mahasiswa peringkat teratas
             </CardDescription>
           </CardHeader>
           <CardContent>
