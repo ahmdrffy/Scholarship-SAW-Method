@@ -2,10 +2,29 @@ import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { criteria, students, normalizeMatrix, calculateSAWScores, getRankedStudents } from '@/data/scholarshipData';
-import { ArrowRight, Calculator, Grid3X3, Trophy } from 'lucide-react';
+import { criteria, normalizeMatrix, calculateSAWScores, getRankedStudents } from '@/data/scholarshipData';
+import { useStudents } from '@/contexts/StudentContext';
+import { ArrowRight, Calculator, Grid3X3, Trophy, AlertCircle } from 'lucide-react';
 
 export default function Systems() {
+  const { students } = useStudents();
+  
+  if (students.length === 0) {
+    return (
+      <Layout>
+        <div className="container py-12">
+          <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
+            <AlertCircle className="h-16 w-16 text-muted-foreground mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Belum Ada Data</h2>
+            <p className="text-muted-foreground">
+              Silakan tambahkan data mahasiswa di halaman Persyaratan terlebih dahulu.
+            </p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   const normalizedData = normalizeMatrix(students, criteria);
   const sawScores = calculateSAWScores(normalizedData, criteria);
   const rankedStudents = getRankedStudents(students, criteria);
@@ -241,41 +260,43 @@ export default function Systems() {
         </div>
 
         {/* Calculation Example */}
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Calculator className="h-5 w-5" />
-              Contoh Perhitungan: {rankedStudents[0]?.name}
-            </CardTitle>
-            <CardDescription>
-              Perhitungan langkah demi langkah untuk mahasiswa peringkat teratas
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="bg-muted/50 rounded-lg p-4 overflow-x-auto">
-                <code className="text-sm whitespace-nowrap">
-                  V = {criteria.map((c, i) => (
-                    <span key={c.id}>
-                      ({c.weight} × {rankedStudents[0]?.normalizedScores[c.id].toFixed(4)})
-                      {i < criteria.length - 1 ? ' + ' : ''}
-                    </span>
-                  ))}
-                </code>
+        {rankedStudents.length > 0 && (
+          <Card className="glass-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Calculator className="h-5 w-5" />
+                Contoh Perhitungan: {rankedStudents[0]?.name}
+              </CardTitle>
+              <CardDescription>
+                Perhitungan langkah demi langkah untuk mahasiswa peringkat teratas
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="bg-muted/50 rounded-lg p-4 overflow-x-auto">
+                  <code className="text-sm whitespace-nowrap">
+                    V = {criteria.map((c, i) => (
+                      <span key={c.id}>
+                        ({c.weight} × {rankedStudents[0]?.normalizedScores[c.id].toFixed(4)})
+                        {i < criteria.length - 1 ? ' + ' : ''}
+                      </span>
+                    ))}
+                  </code>
+                </div>
+                <div className="bg-muted/50 rounded-lg p-4">
+                  <code className="text-sm">
+                    V = {criteria.map((c, i) => (
+                      <span key={c.id}>
+                        {(c.weight * rankedStudents[0]?.normalizedScores[c.id]).toFixed(4)}
+                        {i < criteria.length - 1 ? ' + ' : ''}
+                      </span>
+                    ))} = <strong>{rankedStudents[0]?.sawScore.toFixed(4)}</strong>
+                  </code>
+                </div>
               </div>
-              <div className="bg-muted/50 rounded-lg p-4">
-                <code className="text-sm">
-                  V = {criteria.map((c, i) => (
-                    <span key={c.id}>
-                      {(c.weight * rankedStudents[0]?.normalizedScores[c.id]).toFixed(4)}
-                      {i < criteria.length - 1 ? ' + ' : ''}
-                    </span>
-                  ))} = <strong>{rankedStudents[0]?.sawScore.toFixed(4)}</strong>
-                </code>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </Layout>
   );
