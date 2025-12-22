@@ -3,11 +3,30 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Progress } from '@/components/ui/progress';
-import { criteria, students, getRankedStudents } from '@/data/scholarshipData';
-import { Trophy, Users, CheckCircle, XCircle, BarChart3, Medal, TrendingUp } from 'lucide-react';
+import { criteria, getRankedStudents } from '@/data/scholarshipData';
+import { useStudents } from '@/contexts/StudentContext';
+import { Trophy, Users, CheckCircle, XCircle, BarChart3, Medal, TrendingUp, AlertCircle } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 export default function Results() {
+  const { students } = useStudents();
+
+  if (students.length === 0) {
+    return (
+      <Layout>
+        <div className="container py-12">
+          <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
+            <AlertCircle className="h-16 w-16 text-muted-foreground mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Belum Ada Data</h2>
+            <p className="text-muted-foreground">
+              Silakan tambahkan data mahasiswa di halaman Persyaratan terlebih dahulu.
+            </p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   const rankedStudents = getRankedStudents(students, criteria);
   const passedStudents = rankedStudents.filter(s => s.passed);
   const failedStudents = rankedStudents.filter(s => !s.passed);
@@ -165,48 +184,50 @@ export default function Results() {
         </div>
 
         {/* Top 3 Winners */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Trophy className="h-6 w-6 text-secondary" />
-            Penerima Beasiswa Teratas
-          </h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            {rankedStudents.slice(0, 3).map((student, index) => (
-              <Card key={student.id} className={`glass-card relative overflow-hidden ${
-                index === 0 ? 'ring-2 ring-secondary' : ''
-              }`}>
-                <div className="absolute top-0 right-0 p-3">
-                  <Medal className={`h-8 w-8 ${
-                    index === 0 ? 'text-yellow-500' : 
-                    index === 1 ? 'text-gray-400' : 'text-amber-600'
-                  }`} />
-                </div>
-                <CardHeader>
-                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold mb-2">
-                    #{student.rank}
+        {passedStudents.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <Trophy className="h-6 w-6 text-secondary" />
+              Penerima Beasiswa Teratas
+            </h2>
+            <div className="grid md:grid-cols-3 gap-4">
+              {rankedStudents.slice(0, 3).map((student, index) => (
+                <Card key={student.id} className={`glass-card relative overflow-hidden ${
+                  index === 0 ? 'ring-2 ring-secondary' : ''
+                }`}>
+                  <div className="absolute top-0 right-0 p-3">
+                    <Medal className={`h-8 w-8 ${
+                      index === 0 ? 'text-yellow-500' : 
+                      index === 1 ? 'text-gray-400' : 'text-amber-600'
+                    }`} />
                   </div>
-                  <CardTitle>{student.name}</CardTitle>
-                  <CardDescription>NIM: {student.id}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm text-muted-foreground">Skor SAW</span>
-                        <span className="font-bold">{student.sawScore.toFixed(4)}</span>
-                      </div>
-                      <Progress value={student.sawScore * 100} className="h-2" />
+                  <CardHeader>
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold mb-2">
+                      #{student.rank}
                     </div>
-                    <Badge className="bg-success hover:bg-success/90">
-                      <CheckCircle className="h-3 w-3 mr-1" />
-                      Beasiswa Diberikan
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                    <CardTitle>{student.name}</CardTitle>
+                    <CardDescription>NIM: {student.id}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div>
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm text-muted-foreground">Skor SAW</span>
+                          <span className="font-bold">{student.sawScore.toFixed(4)}</span>
+                        </div>
+                        <Progress value={student.sawScore * 100} className="h-2" />
+                      </div>
+                      <Badge className="bg-success hover:bg-success/90">
+                        <CheckCircle className="h-3 w-3 mr-1" />
+                        Beasiswa Diberikan
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Full Rankings Table */}
         <Card className="glass-card overflow-hidden">

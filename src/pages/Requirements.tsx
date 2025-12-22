@@ -1,11 +1,16 @@
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { criteria, students } from '@/data/scholarshipData';
-import { TrendingUp, Users, Target, Scale } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { criteria } from '@/data/scholarshipData';
+import { useStudents } from '@/contexts/StudentContext';
+import { StudentForm } from '@/components/StudentForm';
+import { TrendingUp, Users, Target, Scale, Trash2, RotateCcw } from 'lucide-react';
 
 export default function Requirements() {
+  const { students, addStudent, updateStudent, deleteStudent, resetToDefault } = useStudents();
   const totalWeight = criteria.reduce((sum, c) => sum + c.weight, 0);
 
   return (
@@ -118,9 +123,35 @@ export default function Requirements() {
           </div>
         </div>
 
-        {/* Input Data Preview */}
+        {/* Input Data */}
         <div>
-          <h2 className="text-2xl font-bold mb-6">Data Input Mahasiswa (Contoh)</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Data Input Mahasiswa</h2>
+            <div className="flex gap-2">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" className="gap-2">
+                    <RotateCcw className="h-4 w-4" />
+                    Reset Data
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Reset ke Data Awal?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Ini akan menghapus semua perubahan dan mengembalikan data mahasiswa ke kondisi awal.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Batal</AlertDialogCancel>
+                    <AlertDialogAction onClick={resetToDefault}>Reset</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <StudentForm mode="add" onSubmit={addStudent} />
+            </div>
+          </div>
+          
           <Card className="glass-card overflow-hidden">
             <CardContent className="p-0">
               <div className="overflow-x-auto">
@@ -134,22 +165,61 @@ export default function Requirements() {
                           {c.id}
                         </TableHead>
                       ))}
+                      <TableHead className="font-semibold text-center">Aksi</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {students.map((student) => (
-                      <TableRow key={student.id}>
-                        <TableCell className="font-mono text-sm">{student.id}</TableCell>
-                        <TableCell className="font-medium">{student.name}</TableCell>
-                        {criteria.map((c) => (
-                          <TableCell key={c.id} className="text-center">
-                            <Badge variant="outline" className="font-mono">
-                              {student.scores[c.id]}
-                            </Badge>
-                          </TableCell>
-                        ))}
+                    {students.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={criteria.length + 3} className="text-center py-8 text-muted-foreground">
+                          Belum ada data mahasiswa. Klik "Tambah Mahasiswa" untuk menambahkan.
+                        </TableCell>
                       </TableRow>
-                    ))}
+                    ) : (
+                      students.map((student) => (
+                        <TableRow key={student.id}>
+                          <TableCell className="font-mono text-sm">{student.id}</TableCell>
+                          <TableCell className="font-medium">{student.name}</TableCell>
+                          {criteria.map((c) => (
+                            <TableCell key={c.id} className="text-center">
+                              <Badge variant="outline" className="font-mono">
+                                {student.scores[c.id]}
+                              </Badge>
+                            </TableCell>
+                          ))}
+                          <TableCell className="text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              <StudentForm
+                                mode="edit"
+                                student={student}
+                                onSubmit={(updated) => updateStudent(student.id, updated)}
+                              />
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button variant="outline" size="icon" className="text-destructive hover:text-destructive">
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>Hapus Mahasiswa?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      Apakah Anda yakin ingin menghapus data {student.name}? Tindakan ini tidak dapat dibatalkan.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Batal</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => deleteStudent(student.id)} className="bg-destructive hover:bg-destructive/90">
+                                      Hapus
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </div>
