@@ -46,9 +46,11 @@ To run this project locally:
 ## 👥 Contributors
 
 **Group 4 Final Project**
-*   [Your Name/Role]
-*   [Team Member Name]
-*   [Team Member Name]
+*   Ahmad Raffy
+*   Deni Merdiansyah
+*   Muhammad Farid
+*   Muhammad Hisyam Fikri
+
 
 ---
 *Created with ❤️ by Group 4*
